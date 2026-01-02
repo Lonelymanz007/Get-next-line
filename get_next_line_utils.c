@@ -5,148 +5,94 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tphuwian <tphuwian@student.42bangkok.com>  #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-12-13 13:18:51 by tphuwian          #+#    #+#             */
-/*   Updated: 2025-12-13 13:18:51 by tphuwian         ###   ########.fr       */
+/*   Created: 2025-12-18 09:01:40 by tphuwian          #+#    #+#             */
+/*   Updated: 2025-12-18 09:01:40 by tphuwian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	ft_strlen(const char *s)
+size_t	ft_strlen(const char *str)
 {
 	size_t	i;
 
 	i = 0;
-	while (s[i])
+	while (str[i])
 		i++;
 	return (i);
 }
-
-char	*ft_strchr(const char *s, int c)
+int ft_findNL(char *str)
 {
-	unsigned int	i;
-
+	int i;
 	i = 0;
-	while (s[i])
+
+	while(str[i])
 	{
-		if (s[i] == (char)c)
-			return ((char *)&s[i]);
+		if(str[i] == '\n')
+			return(1);
 		i++;
 	}
-	if (s[i] == (char)c)
-		return ((char *)&s[i]);
-	return (NULL);
+	return(0);
 }
-
-char	*ft_strjoin(char const *s1, char const *s2)
+int findAD_NL(char *str)
 {
-	char	*res;
-	size_t	len1;
-	size_t	len2;
-
-	if (!s1 && !s2)
-		return (NULL);
-	*res = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
-	if (!res)
-		return (NULL);
-	len1 = 0;
-	while (s1[len1])
-	{
-		res[len1] = s1[len1];
-		len1++;
-	}
-	len2 = 0;
-	while (s2[len2])
-	{
-		res[len1 + len2] = s2[len2];
-		len2++;
-	}
-	res[len1 + len2] = '\0';
-	return (res);
-}
-
-char	*ft_strdup(const char *s1)
-{
-	char	*dest;
-	size_t	i;
-
-	dest = (char *)malloc(ft_strlen(s1) + 1);
+	int i;
 	i = 0;
-	if (!dest)
-		return (NULL);
-	while (s1[i])
+
+	if(!str)
+		return(-1);
+	while(str[i])
 	{
-		dest[i] = s1[i];
+		if(str[i] == '\n')
+			return(i);
 		i++;
 	}
-	dest[i] = '\0';
-	return (dest);
+	return(-1);
 }
-
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+char *ft_strjoin(char *str1, char *str2)
 {
-	char	*temp;
-	size_t	i;
+	int i;
+	int j;
+	char *box;
 
+	box = (char *)malloc(sizeof(char) * (ft_strlen(str1) + ft_strlen(str2) + 1));
+	if(box == NULL)
+		return(NULL);
 	i = 0;
-	if (!s)
-		return (NULL);
-	if (start >= ft_strlen(s))
-		len = 0;
-	if (ft_strlen(s) - start < len)
-		len = ft_strlen(s) - start;
-	temp = malloc(sizeof(char) * (len + 1));
-	if (!temp)
-		return (NULL);
-	while (i < len)
+	while(str1[i])
 	{
-		temp[i] = s[start];
+		box[i] = str1[i];
 		i++;
-		start++;
 	}
-	temp[i] = '\0';
-	return (temp);
-}
-t_gnl_node *attact_new_node(t_gnl_node **head, int fd)
-{
-	t_gnl_node *new_node;
-
-	new_node = *head;
-	while (new_node)
+	j = 0;
+	while(str2[j])
 	{
-		if (new_node->fd == fd)
-			return (new_node);
-		new_node = new_node->next;
+		box[i] = str2[j];
+		j++;
+		i++;
 	}
-	new_node = (t_gnl_node *)malloc(sizeof(t_gnl_node));
-	if (!new_node)
-		return (NULL);
-	new_node->fd = fd;
-	new_node->buffer = NULL;
-	new_node->next = *head;
-	*head = new_node;
-	return (new_node);
+	box[i] = '\0';
+	return(box);
 }
-void remove_node(t_gnl_node **head, int fd)
+char *extract_NL(char *stash)
 {
-	t_gnl_node *current;
-	t_gnl_node *previous;
+	char *box;
+	int len;
+	int k;
+	k = 0;
 
-	current = *head;
-	previous = NULL;
-	while (current)
+	if(findAD_NL(stash) == -1)
+		len = ft_strlen(stash) + 1;
+	else	
+		len = findAD_NL(stash) + 1;
+	box = (char *)malloc(sizeof(char) * (len + 1));
+	if(!box)
+		return(NULL);
+	while(k < len)
 	{
-		if (current->fd == fd)
-		{
-			if (previous)
-				previous->next = current->next;
-			else
-				*head = current->next;
-			free(current->buffer);
-			free(current);
-			return;
-		}
-		previous = current;
-		current = current->next;
+		box[k] = stash[k];
+		k++;
 	}
+	box[k] = '\0';
+	return(box);
 }
