@@ -15,16 +15,22 @@
 
 char    *get_next_line(int fd)
 {
-    static char *Buffer;
+    static char *stash;
     char *result;
 
     if(fd < 0 || BUFFER_SIZE <= 0)
         return(NULL);
-    Buffer = Read_stash(fd, Buffer);
-    if(Buffer == NULL)
+    stash = Read_stash(fd, stash);
+    if(stash == NULL)
         return(NULL);
-    result = extract_NL(Buffer);
-    Buffer = clear_stash(Buffer);
+    if (stash[0] == '\0') 
+    {
+        free(stash); 
+        stash = NULL;    
+        return (NULL);
+    }
+    result = extract_NL(stash);
+    stash = clear_stash(stash);
     return(result);
 }
 char *Read_stash(int fd, char *stash)
@@ -103,7 +109,6 @@ char *ft_strdup(const char *s1)
 }
 char *for_free(char *stash)
 {
-    if(stash)
-        free(stash);
+    free(stash);
     return(NULL);
 }
