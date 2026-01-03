@@ -13,7 +13,7 @@
 
 #include "get_next_line.h"
 
-char    *GNL(int fd)
+char    *get_next_line(int fd)
 {
     static char *Buffer;
     char *result;
@@ -33,17 +33,18 @@ char *Read_stash(int fd, char *stash)
     char *temp;
     int n;
 
+    if (!stash)
+        stash = ft_strdup("");
     box = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
-    if(box == NULL)
-        return(NULL);
+    if(!box)
+        return(for_free(stash));
     while(ft_findNL(stash) == 0)
     {
         n = read(fd, box, BUFFER_SIZE);
         if(n < 0)
         {
-            free(stash);
             free(box);
-            return(NULL);
+            return(for_free(stash));
         }
         if(n == 0)
             break;
@@ -82,4 +83,27 @@ char *clear_stash(char *stash)
         free(stash);
         return(box);
     }
+}
+char *ft_strdup(const char *s1)
+{
+    char    *dest;
+    size_t  i;
+
+    dest = (char *)malloc(ft_strlen(s1) + 1);
+    if (!dest)
+        return (NULL);
+    i = 0;
+    while (s1[i])
+    {
+        dest[i] = s1[i];
+        i++;
+    }
+    dest[i] = '\0';
+    return (dest);
+}
+char *for_free(char *stash)
+{
+    if(stash)
+        free(stash);
+    return(NULL);
 }
