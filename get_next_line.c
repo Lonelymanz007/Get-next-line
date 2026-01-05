@@ -44,14 +44,11 @@ char *Read_stash(int fd, char *stash)
     box = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
     if(!box)
         return(for_free(stash));
-    while(ft_findNL(stash) == 0)
+    while(findAD_NL(stash) == -1)
     {
         n = read(fd, box, BUFFER_SIZE);
         if(n < 0)
-        {
-            free(box);
-            return(for_free(stash));
-        }
+            for_free(box);
         if(n == 0)
             break;
         box[n] = '\0';

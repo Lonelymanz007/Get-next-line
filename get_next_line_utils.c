@@ -21,19 +21,6 @@ size_t	ft_strlen(const char *str)
 		i++;
 	return (i);
 }
-int ft_findNL(char *str)
-{
-	int i;
-	i = 0;
-
-	while(str[i])
-	{
-		if(str[i] == '\n')
-			return(1);
-		i++;
-	}
-	return(0);
-}
 int findAD_NL(char *str)
 {
 	int i;
