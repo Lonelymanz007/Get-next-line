@@ -5,7 +5,6 @@
 # include <stdlib.h>
 
 size_t	ft_strlen(const char *str);
-int ft_findNL(char *str);
 int findAD_NL(char *str);
 char *ft_strjoin(char *str1, char *str2);
 char *extract_NL(char *stash);
