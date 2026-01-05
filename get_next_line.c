@@ -48,7 +48,7 @@ char *Read_stash(int fd, char *stash)
     {
         n = read(fd, box, BUFFER_SIZE);
         if(n < 0)
-            for_free(box);
+            return(for_free(stash));
         if(n == 0)
             break;
         box[n] = '\0';
@@ -85,7 +85,7 @@ char *clear_stash(char *stash)
         return(box);
     }
 }
-char *ft_strdup(const char *s1)
+char *ft_strdup( char *s1)
 {
     char    *dest;
     size_t  i;
@@ -103,3 +103,15 @@ char *ft_strdup(const char *s1)
     return (dest);
 }
 
+#include <fcntl.h>
+#include <stdio.h>
+
+int main()
+{
+    int fd;
+    fd = open("text.txt", O_RDONLY);
+        printf("%s\n", get_next_line(fd));
+        printf("%s", get_next_line(fd));
+        printf("%s", get_next_line(fd));
+        printf("%s", get_next_line(fd));
+}

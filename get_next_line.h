@@ -11,7 +11,7 @@ char *extract_NL(char *stash);
 char	*get_next_line(int fd);
 char *Read_stash(int fd, char *stash);
 char *clear_stash(char *stash);
-char *ft_strdup(const char *s1);
+char *ft_strdup( char *s1);
 char *for_free(char *stash);
 
 # ifndef BUFFER_SIZE
