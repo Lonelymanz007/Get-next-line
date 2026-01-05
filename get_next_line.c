@@ -104,8 +104,4 @@ char *ft_strdup(const char *s1)
     dest[i] = '\0';
     return (dest);
 }
-char *for_free(char *stash)
-{
-    free(stash);
-    return(NULL);
-}
+

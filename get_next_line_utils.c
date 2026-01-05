@@ -83,3 +83,8 @@ char *extract_NL(char *stash)
 	box[k] = '\0';
 	return(box);
 }
+char *for_free(char *stash)
+{
+    free(stash);
+    return(NULL);
+}
