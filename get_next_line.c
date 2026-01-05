@@ -67,21 +67,19 @@ char *clear_stash(char *stash)
     i = 0;
 
     if(findAD_NL(stash) == -1)
-    {
-        free(stash);
-        return(NULL);
-    }
+        return(for_free(stash));
     else
     {
         len = findAD_NL(stash) + 1;
         box = (char *)malloc(sizeof(char) * (ft_strlen(stash) - len + 1));
         if(!box)
-        {
-            free(stash);
-            return(NULL);
-        }
+            return(for_free(stash));
         while(stash[len])
-            box[i++] = stash[len++];
+        {
+            box[i] = stash[len];
+            i++;
+            len++;
+        }
         box[i] ='\0';
         free(stash);
         return(box);
