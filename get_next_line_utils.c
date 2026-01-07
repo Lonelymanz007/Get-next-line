@@ -21,70 +21,76 @@ size_t	ft_strlen(const char *str)
 		i++;
 	return (i);
 }
-int findAD_NL(char *str)
-{
-	int i;
-	i = 0;
 
-	if(!str)
-		return(-1);
-	while(str[i])
+int	find_ad_nl(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (!str)
+		return (-1);
+	while (str[i])
 	{
-		if(str[i] == '\n')
-			return(i);
+		if (str[i] == '\n')
+			return (i);
 		i++;
 	}
-	return(-1);
+	return (-1);
 }
-char *ft_strjoin(char *str1, char *str2)
-{
-	int i;
-	int j;
-	char *box;
 
-	box = (char *)malloc(sizeof(char) * (ft_strlen(str1) + ft_strlen(str2) + 1));
-	if(box == NULL)
-		return(NULL);
+char	*ft_strjoin(char *str1, char *str2)
+{
+	int		i;
+	int		j;
+	char	*box;
+
+	box = (char *)malloc(sizeof(char) * (ft_strlen(str1) + ft_strlen(str2)
+				+ 1));
+	if (box == NULL)
+		return (NULL);
 	i = 0;
-	while(str1[i])
+	while (str1[i])
 	{
 		box[i] = str1[i];
 		i++;
 	}
 	j = 0;
-	while(str2[j])
+	while (str2[j])
 	{
 		box[i] = str2[j];
 		j++;
 		i++;
 	}
 	box[i] = '\0';
-	return(box);
+	return (box);
 }
-char *extract_NL(char *stash)
-{
-	char *box;
-	int len;
-	int k;
-	k = 0;
 
-	if(findAD_NL(stash) == -1)
+char	*extract_nl(char *stash)
+{
+	char	*box;
+	int		len;
+	int		k;
+
+	k = 0;
+	if (find_ad_nl(stash) == -1)
 		len = ft_strlen(stash) + 1;
-	else	
-		len = findAD_NL(stash) + 1;
+	else
+		len = find_ad_nl(stash) + 1;
 	box = (char *)malloc(sizeof(char) * (len + 1));
-	if(!box)
-		return(NULL);
-	while(k < len)
+	if (!box)
+		return (NULL);
+	while (k < len)
 	{
 		box[k] = stash[k];
 		k++;
 	}
 	box[k] = '\0';
-	return(box);
+	return (box);
 }
-char *for_free(char *stash)
+
+char	*for_free(char *stash, char *box)
 {
-    free(stash);
-    return(NULL);
+	free(stash);
+	free(box);
+	return (NULL);
 }
